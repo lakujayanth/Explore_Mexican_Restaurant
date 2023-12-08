@@ -218,7 +218,9 @@ with tab2:
         detail='rating:N',
         text=alt.Text('mean(rating):Q', format='.1f')
     )
-    c1_bars + c1_text
+    c1_chart = c1_bars + c1_text
+    
+    st.altair_chart(c1_chart,theme="streamlit", use_container_width=True)
     
     ranking_c2 = ranking_g[ranking_g['price'] == 'medium']
     c2_bars = alt.Chart(ranking_c2, title = alt.Title("Restaurants where Food Prices - Medium" )).mark_bar().encode(
@@ -237,7 +239,10 @@ with tab2:
         detail='rating:N',
         text=alt.Text('mean(rating):Q', format='.1f')
     )
-    c2_bars + c2_text
+    
+    c2_chart = c2_bars + c2_text
+    
+    st.altair_chart(c2_chart,theme="streamlit", use_container_width=True)
     
     ranking_c3 = ranking_g[ranking_g['price'] == 'high']
     c3_bars = alt.Chart(ranking_c3, title = alt.Title("Top Restaurants where Food Prices - High" )).mark_bar().encode(
@@ -256,8 +261,10 @@ with tab2:
         detail='rating:N',
         text=alt.Text('mean(rating):Q', format='.1f')
     )
-    c3_bars + c3_text
     
+    c3_chart = c3_bars + c3_text
+    
+    st.altair_chart(c3_chart,theme="streamlit", use_container_width=True)
 st.markdown (''' 
              # Buen Provecho !! 
              ''')
