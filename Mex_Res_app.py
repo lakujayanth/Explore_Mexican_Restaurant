@@ -191,15 +191,6 @@ with tab2:
 
     ranking_c= ranking.groupby(['name','price','parking_lot'], as_index=False).aggregate({'rating':'mean','food_rating':'mean','service_rating':'mean'}).sort_values(by=['rating','food_rating','service_rating'], ascending=False).head(ht_list_lmt)
     
-    # Facet_chart = alt.Chart(ranking_g).mark_bar().encode(
-    # x=  alt.X('name',title= None),
-    # y= alt.Y('rating', title="Rating"), color = 'parking_lot'
-    # ).properties( title="Restaurants categorized based on their Price", width = 200, height = 200).facet(
-    #         row = alt.Row('price', sort =["low","medium","high"], header=alt.Header(title="Restaurants Name", titleOrient= 'bottom'))
-    # ).resolve_scale(x='independent')
-    # st.altair_chart(Facet_chart,theme="streamlit", use_container_width=True)                                                                                    
-    # sel_cuisine = st.sidebar.multiselect("Do you want to refine your search on your favorite cuisine", rs_cus_list)
-    
     
     st.subheader (" Discover Low-Cost Culinary Delights!")
     ranking_c1 = ranking_g[ranking_g['price'] == 'low']
@@ -209,9 +200,6 @@ with tab2:
         color=alt.Color('parking_lot',title= "Parking Availability", sort = 'descending'),
 
         tooltip = ['food_rating','service_rating','price','parking_lot']
-        # order = alt.Order(# Sort the segments of the bars by this field
-        #   'Avg_Rating',
-        #   sort='descending')
     ) 
     
     c1_text = alt.Chart(ranking_c1).mark_text(dx=-15, dy=3, color='white').encode(
@@ -220,7 +208,9 @@ with tab2:
         detail='rating:N',
         text=alt.Text('mean(rating):Q', format='.1f')
     )
-    c1_bars + c1_text
+    
+    st.altair_chart(c1_bars + c1_text,theme="streamlit", use_container_width=True)
+    
     st.subheader ("Savor the Middle Ground: Where Quality Meets Affordability in Every Bite!")
     ranking_c2 = ranking_g[ranking_g['price'] == 'medium']
     c2_bars = alt.Chart(ranking_c2, title = alt.Title("Medium-Cost Dining Delights!" )).mark_bar().encode(
@@ -229,9 +219,6 @@ with tab2:
         color=alt.Color('parking_lot',title= "Parking Availability", sort = 'descending'),
 
         tooltip = ['food_rating','service_rating','price','parking_lot']
-        # order = alt.Order(# Sort the segments of the bars by this field
-        #   'Avg_Rating',
-        #   sort='descending')
     ) 
     c2_text = alt.Chart(ranking_c2).mark_text(dx=-15, dy=3, color='white').encode(
         x=alt.X('mean(rating):Q', stack='zero', sort='-x'),
@@ -239,7 +226,8 @@ with tab2:
         detail='rating:N',
         text=alt.Text('mean(rating):Q', format='.1f')
     )
-    c2_bars + c2_text
+    
+    st.altair_chart(c2_bars + c2_text,theme="streamlit", use_container_width=True)
     
     st.subheader ("Moderate on Price, Rich in Flavor: Unveiling Culinary Excellence at the Right Cost!")
     ranking_c3 = ranking_g[ranking_g['price'] == 'high']
@@ -249,9 +237,6 @@ with tab2:
         color=alt.Color('parking_lot',title= "Parking Availability", sort = 'descending'),
 
         tooltip = ['food_rating','service_rating','price','parking_lot']
-        # order = alt.Order(# Sort the segments of the bars by this field
-        #   'Avg_Rating',
-        #   sort='descending')
     ) 
     c3_text = alt.Chart(ranking_c3).mark_text(dx=-15, dy=3, color='white').encode(
         x=alt.X('mean(rating):Q', stack='zero', sort='-x'),
@@ -259,6 +244,6 @@ with tab2:
         detail='rating:N',
         text=alt.Text('mean(rating):Q', format='.1f')
     )
-    c3_bars + c3_text
-    
+ 
+    st.altair_chart(c3_bars + c3_text,theme="streamlit", use_container_width=True)
 st.header (" Buen Provecho !! ")

@@ -221,7 +221,9 @@ with tab2:
         detail='rating:N',
         text=alt.Text('mean(rating):Q', format='.1f')
     )
-    c1_bars + c1_text
+    
+    st.altair_chart(c1_bars + c1_text,theme="streamlit", use_container_width=True)
+    
     st.subheader ("Savor the Middle Ground: Where Quality Meets Affordability in Every Bite!")
     ranking_c2 = ranking_g[ranking_g['price'] == 'medium']
     c2_bars = alt.Chart(ranking_c2, title = alt.Title("Medium-Cost Dining Delights!" )).mark_bar().encode(
@@ -240,7 +242,8 @@ with tab2:
         detail='rating:N',
         text=alt.Text('mean(rating):Q', format='.1f')
     )
-    c2_bars + c2_text
+    
+    st.altair_chart(c2_bars + c2_text,theme="streamlit", use_container_width=True)
     
     st.subheader ("Moderate on Price, Rich in Flavor: Unveiling Culinary Excellence at the Right Cost!")
     ranking_c3 = ranking_g[ranking_g['price'] == 'high']
@@ -260,6 +263,6 @@ with tab2:
         detail='rating:N',
         text=alt.Text('mean(rating):Q', format='.1f')
     )
-    c3_bars + c3_text
-    
+ 
+    st.altair_chart(c3_bars + c3_text,theme="streamlit", use_container_width=True)
 st.header (" Buen Provecho !! ")
