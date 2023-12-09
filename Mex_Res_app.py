@@ -3,6 +3,7 @@ import pandas as pd
 import altair as alt
 import numpy as np
 import pydeck as pdk 
+st.set_page_config(layout="wide")
 
 files = ['chefmozaccepts',
          'chefmozcuisine',
@@ -15,7 +16,7 @@ files = ['chefmozaccepts',
          'geoplaces2']
 dfs = dict()
 
-# @st.cache_data ()    
+@st.cache_data ()    
 def load_file(f):
     if f is not None:
         for file in files:
@@ -25,9 +26,9 @@ def load_file(f):
         for file in files:
             fl= 'data/'+file+'.csv'
             dfs[file] = pd.read_csv(fl,encoding='ISO-8859-1')
-    return()
+    return(dfs)
 
-load_file(files)
+dfs = load_file(files)
    
 alt.data_transformers.disable_max_rows()
 
@@ -110,9 +111,9 @@ ranking['Avg_Rating'] = ranking[['rating','food_rating','service_rating']].mean(
 ranking = ranking[ranking['state'] != 'Not Determined' ]
 ranking['parking_lot'] =  ranking['parking_lot'].apply(lambda x: "Not available" if x in 'none' else x)
 
-st.markdown('''
-            # Let's explore some Restaurants around Mexico 
-            ''')
+APP_TITLE = "Let's discover a few dining options in the vicinity of Mexico"
+
+st.title(APP_TITLE)
 
 #get unique states
 
@@ -128,15 +129,16 @@ sel_cuisine = st.sidebar.multiselect("Do you want to refine your search on your 
 ## Display the filtered list
 # st.dataframe(sel_cuisine)
 
-st.write(f"**Restaurants of {sel_st}**")
+APP_SUB_TITLE = "Restaurants of " + sel_st
 
+st.subheader(APP_SUB_TITLE)
 
 if bool(sel_cuisine):
     ranking = ranking[(ranking['state'] == sel_st) & (res_rating['Rcuisine'].isin(sel_cuisine))]
 else:
     ranking = ranking[ranking['state'] == sel_st]
 
-tab1,tab2 = st.tabs(['General','Parking and Price details'])
+tab1,tab2 = st.tabs(['Location and Rating details','Parking and Price details'])
 
 
 with tab1: 
@@ -148,8 +150,7 @@ with tab1:
     else:
         res_rat_filter  = res_rating[(res_rating['rating'] > 0) & (res_rating['state'] == sel_st)]
    
-    st.write ('    Use the below map to check on the location of the Restaurants for '+  str(sel_st)  + '. Filter on the Cuisine from the sidebar for specific options.'             
-              ' Zoom in and out for the better view ')
+    st.write (' Explore the map below to locate restaurants in Morelos. Utilize the sidebar to filter by cuisine for specific options. Adjust the zoom level for a more detailed view.')
     st.map(res_rat_filter,  
         latitude = 'latitude',	longitude ='longitude',color= "#396944",zoom = 11, use_container_width = True)
     
@@ -159,13 +160,13 @@ with tab1:
     res_rat_filter  = res_rating[(res_rating['rating'] > 0) & (res_rating['state'] == sel_st)& (res_rating['Rcuisine'] )]
         
     max_slider_len = 30
-    ht_list_lmt = st.sidebar.slider("Slide to control your Restaurants list count",min_value=5,max_value=max_slider_len,value=10, step=1)
+    ht_list_lmt = st.sidebar.slider("Slide to adjust restaurant list",min_value=5,max_value=max_slider_len,value=10, step=1)
     ranking_g= ranking.groupby(['name','price','parking_lot'], as_index=False).aggregate({'rating':'mean','food_rating':'mean','service_rating':'mean'}).sort_values(by=['rating','food_rating','service_rating'], ascending=False).head(ht_list_lmt)
-    st.write ('Below chart displays the details of top '+ str(ht_list_lmt) + 
-              ' Restaurants based on Average rating for the selected ' + str(sel_st) + ' and Cuisine.'             
-              ' These charts are ranked based on the Top rated Restaurants. Use the slider on the side bar to expand the range of Restaurants')
+    st.write ('The chart below displays details of the top '+ str(ht_list_lmt) + 
+              'restaurants based on average ratings for the selected state ' + str(sel_st) + ' and Cuisine.'             
+              'Utilize the slider on the sidebar to extend the range of displayed restaurants')
     
-    bars = alt.Chart(ranking_g, title = alt.Title("Top Restaurants based on Rating" )).mark_bar().encode(
+    bars = alt.Chart(ranking_g, title = alt.Title("Top-rated restaurants")).mark_bar().encode(
     x=alt.X('mean(rating):Q', sort = '-x', title= "Rating"),
     y=alt.Y('name:N',sort=alt.EncodingSortField('rating', op='min', order='descending'), title = "Restaurant Name"),
     color=alt.Color('food_rating',title= "Food Rating",scale=alt.Scale(domain=(0.5, 2))),
@@ -185,9 +186,8 @@ with tab1:
 
 with tab2:
 
-
-    st.write('Browse this tab for  the price of the food and Parking Facilities available for the restaurants from '+sel_st + ' and choose your favorite Cuisine to narrow your search. '
-                ' The charts are ranked based on food and service rating provide by the customers. Use the slider on the side bar to expand the range of Restaurants')
+    st.subheader("Feast on Flavor, Light on the Wallet: Discover Low-Cost Culinary Delights!")
+    st.write('Check this tab for food prices and parking info in '+sel_st + ' restaurants.Narrow your search by choosing your favorite cuisine. Charts rank places by customer-rated food and service. Use the sidebar slider to see more restaurants.')
 
     ranking_c= ranking.groupby(['name','price','parking_lot'], as_index=False).aggregate({'rating':'mean','food_rating':'mean','service_rating':'mean'}).sort_values(by=['rating','food_rating','service_rating'], ascending=False).head(ht_list_lmt)
     
@@ -201,8 +201,9 @@ with tab2:
     # sel_cuisine = st.sidebar.multiselect("Do you want to refine your search on your favorite cuisine", rs_cus_list)
     
     
+    st.subheader (" Discover Low-Cost Culinary Delights!")
     ranking_c1 = ranking_g[ranking_g['price'] == 'low']
-    c1_bars = alt.Chart(ranking_c1, title = alt.Title("Restaurants where Food Prices - Low" )).mark_bar().encode(
+    c1_bars = alt.Chart(ranking_c1, title = alt.Title("Top-Rated Restaurants with low Food Prices" )).mark_bar().encode(
         x=alt.X('mean(rating):Q', sort = '-x', title= "Rating"),
         y=alt.Y('name:N',sort=alt.EncodingSortField('rating', op='min', order='descending'), title = "Restaurant Name"),
         color=alt.Color('parking_lot',title= "Parking Availability", sort = 'descending'),
@@ -212,18 +213,17 @@ with tab2:
         #   'Avg_Rating',
         #   sort='descending')
     ) 
+    
     c1_text = alt.Chart(ranking_c1).mark_text(dx=-15, dy=3, color='white').encode(
         x=alt.X('mean(rating):Q', stack='zero', sort='-x'),
         y=alt.Y('name:N', sort='-x'),
         detail='rating:N',
         text=alt.Text('mean(rating):Q', format='.1f')
     )
-    c1_chart = c1_bars + c1_text
-    
-    st.altair_chart(c1_chart,theme="streamlit", use_container_width=True)
-    
+    c1_bars + c1_text
+    st.subheader ("Savor the Middle Ground: Where Quality Meets Affordability in Every Bite!")
     ranking_c2 = ranking_g[ranking_g['price'] == 'medium']
-    c2_bars = alt.Chart(ranking_c2, title = alt.Title("Restaurants where Food Prices - Medium" )).mark_bar().encode(
+    c2_bars = alt.Chart(ranking_c2, title = alt.Title("Medium-Cost Dining Delights!" )).mark_bar().encode(
         x=alt.X('mean(rating):Q', sort = '-x', title= "Rating"),
         y=alt.Y('name:N',sort=alt.EncodingSortField('rating', op='min', order='descending'), title = "Restaurant Name"),
         color=alt.Color('parking_lot',title= "Parking Availability", sort = 'descending'),
@@ -239,13 +239,11 @@ with tab2:
         detail='rating:N',
         text=alt.Text('mean(rating):Q', format='.1f')
     )
+    c2_bars + c2_text
     
-    c2_chart = c2_bars + c2_text
-    
-    st.altair_chart(c2_chart,theme="streamlit", use_container_width=True)
-    
+    st.subheader ("Moderate on Price, Rich in Flavor: Unveiling Culinary Excellence at the Right Cost!")
     ranking_c3 = ranking_g[ranking_g['price'] == 'high']
-    c3_bars = alt.Chart(ranking_c3, title = alt.Title("Top Restaurants where Food Prices - High" )).mark_bar().encode(
+    c3_bars = alt.Chart(ranking_c3, title = alt.Title("Pinnacle Dining: High-End Indulgence!")).mark_bar().encode(
         x=alt.X('mean(rating):Q', sort = '-x', title= "Rating"),
         y=alt.Y('name:N',sort=alt.EncodingSortField('rating', op='min', order='descending'), title = "Restaurant Name"),
         color=alt.Color('parking_lot',title= "Parking Availability", sort = 'descending'),
@@ -261,10 +259,6 @@ with tab2:
         detail='rating:N',
         text=alt.Text('mean(rating):Q', format='.1f')
     )
+    c3_bars + c3_text
     
-    c3_chart = c3_bars + c3_text
-    
-    st.altair_chart(c3_chart,theme="streamlit", use_container_width=True)
-st.markdown (''' 
-             # Buen Provecho !! 
-             ''')
+st.header (" Buen Provecho !! ")
