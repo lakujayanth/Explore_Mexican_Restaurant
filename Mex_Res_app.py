@@ -150,7 +150,7 @@ with tab1:
     else:
         res_rat_filter  = res_rating[(res_rating['rating'] > 0) & (res_rating['state'] == sel_st)]
    
-    st.write (' Explore the map below to locate restaurants in '+sel_st +'. Utilize the sidebar to filter by cuisine for specific options. Adjust the zoom level for a more detailed view.')
+    st.write (' Explore the map below to locate restaurants in '+ sel_st +'. Utilize the sidebar to filter by cuisine for specific options. Adjust the zoom level for a more detailed view.')
     st.map(res_rat_filter,  
         latitude = 'latitude',	longitude ='longitude',color= "#396944",zoom = 11, use_container_width = True)
     
@@ -187,7 +187,7 @@ with tab1:
 with tab2:
 
     st.subheader("Feast on Flavor, Light on the Wallet: Discover Low-Cost Culinary Delights!")
-    st.write('Check this tab for food prices and parking info in '+sel_st + 'restaurants.Narrow your search by choosing your favorite cuisine. Charts rank places by customer-rated food and service. Use the sidebar slider to see more restaurants.')
+    st.write('Check this tab for food prices and parking info in '+sel_st + ' restaurants. Narrow your search by choosing your favorite cuisine. Charts rank places by customer-rated food and service. Use the sidebar slider to see more restaurants.')
 
     ranking_c= ranking.groupby(['name','price','parking_lot'], as_index=False).aggregate({'rating':'mean','food_rating':'mean','service_rating':'mean'}).sort_values(by=['rating','food_rating','service_rating'], ascending=False).head(ht_list_lmt)
     
