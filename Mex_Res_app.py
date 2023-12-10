@@ -187,7 +187,7 @@ with tab1:
 with tab2:
 
     st.subheader("Feast on Flavor, Light on the Wallet: Discover Low-Cost Culinary Delights!")
-    st.write('Check this tab for food prices and parking info in '+sel_st + ' restaurants.Narrow your search by choosing your favorite cuisine. Charts rank places by customer-rated food and service. Use the sidebar slider to see more restaurants.')
+    st.write('Check this tab for food prices and parking info in '+sel_st + 'restaurants.Narrow your search by choosing your favorite cuisine. Charts rank places by customer-rated food and service. Use the sidebar slider to see more restaurants.')
 
     ranking_c= ranking.groupby(['name','price','parking_lot'], as_index=False).aggregate({'rating':'mean','food_rating':'mean','service_rating':'mean'}).sort_values(by=['rating','food_rating','service_rating'], ascending=False).head(ht_list_lmt)
     
