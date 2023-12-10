@@ -204,7 +204,7 @@ with tab2:
     
     st.subheader (" Discover Low-Cost Culinary Delights!")
     ranking_c1 = ranking_g[ranking_g['price'] == 'low']
-    c1_bars = alt.Chart(ranking_c1, title = alt.Title("Top-Rated Restaurants with low Food Prices" )).mark_bar().encode(
+    c1_bars = alt.Chart(ranking_c1, title = alt.Title("Top Picks, Tiny Bills")).mark_bar().encode(
         x=alt.X('mean(rating):Q', sort = '-x', title= "Rating"),
         y=alt.Y('name:N',sort=alt.EncodingSortField('rating', op='min', order='descending'), title = "Restaurant Name"),
         color=alt.Color('parking_lot',title= "Parking Availability", sort = 'descending'),
@@ -223,7 +223,7 @@ with tab2:
     )
     
     st.altair_chart(c1_bars + c1_text,theme="streamlit", use_container_width=True)
-    
+    st.markdown ("--------------------------------------------------------------")
     st.subheader ("Savor the Middle Ground: Where Quality Meets Affordability in Every Bite!")
     ranking_c2 = ranking_g[ranking_g['price'] == 'medium']
     c2_bars = alt.Chart(ranking_c2, title = alt.Title("Medium-Cost Dining Delights!" )).mark_bar().encode(
@@ -244,8 +244,9 @@ with tab2:
     )
     
     st.altair_chart(c2_bars + c2_text,theme="streamlit", use_container_width=True)
-    
-    st.subheader ("Moderate on Price, Rich in Flavor: Unveiling Culinary Excellence at the Right Cost!")
+    st.markdown ("--------------------------------------------------------------")
+    st.subheader ("Fine Dining, Elevated Pricing: Where Flavor Knows No Limits!")
+   
     ranking_c3 = ranking_g[ranking_g['price'] == 'high']
     c3_bars = alt.Chart(ranking_c3, title = alt.Title("Pinnacle Dining: High-End Indulgence!")).mark_bar().encode(
         x=alt.X('mean(rating):Q', sort = '-x', title= "Rating"),
@@ -265,4 +266,5 @@ with tab2:
     )
  
     st.altair_chart(c3_bars + c3_text,theme="streamlit", use_container_width=True)
+    st.markdown ("--------------------------------------------------------------")
 st.header (" Buen Provecho !! ")
