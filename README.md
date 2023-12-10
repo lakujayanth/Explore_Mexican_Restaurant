@@ -15,10 +15,10 @@ The data for this project is sourced from the UC Irvine Machine Learning Reposit
   <li>Consumers </li><em>This dataset encompasses information gathered about consumers. Each of these datasets can be linked to a unique userID.</em> 
   <li>Restaurants - Consumers Rating</li><em>The Rating dataset includes the food, service, and overall ratings given by consumers to a restaurant. Each rating is uniquely identified by the combination of placeID and userID</em>
 </ol>
-                | File Name      | Description |
-                | :---:        |    :----:    |
-                | chefmozaccepts.csv       | payment method (Card, Cash)       | 
-                | chefmozcuisine.csv    | Cuisine type        | 
-                |chefmozhours4.csv | Work hours |
-                |chefmozparking.csv   | Parking type availability       | 
-                |geoplaces2.csv  | geographical presence |
+| File Name      | Description |
+| :---:        |    :----:    |
+| chefmozaccepts.csv       | payment method (Card, Cash)       | 
+| chefmozcuisine.csv    | Cuisine type        | 
+|chefmozhours4.csv | Work hours |
+|chefmozparking.csv   | Parking type availability       | 
+|geoplaces2.csv  | geographical presence |
