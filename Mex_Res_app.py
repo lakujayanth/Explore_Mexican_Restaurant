@@ -111,7 +111,7 @@ ranking['Avg_Rating'] = ranking[['rating','food_rating','service_rating']].mean(
 ranking = ranking[ranking['state'] != 'Not Determined' ]
 ranking['parking_lot'] =  ranking['parking_lot'].apply(lambda x: "Not available" if x in 'none' else x)
 
-APP_TITLE = "Let's discover a few dining options in the vicinity of Mexico"
+APP_TITLE = "Let's discover the dining options in the vicinity of Mexico"
 
 st.title(APP_TITLE)
 
