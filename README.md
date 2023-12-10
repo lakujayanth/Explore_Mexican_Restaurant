@@ -11,7 +11,7 @@ To experience the app live, visit: https://exploremexicanrestaurant-restaurant-m
 The data for this project is sourced from the UC Irvine Machine Learning Repository, available at https://archive.ics.uci.edu/dataset/232/restaurant+consumer+data. The input data consists of three main entities: Restaurants, Consumers, and User-Item-Rating. These files collectively provide essential information about restaurants, customers, and the ratings users have given to various items, forming the foundation for our analysis and recommendation system. By leveraging this diverse dataset, we aim to extract valuable insights and enhance the user experience in discovering and selecting restaurants.
 
 <ol>
-  <li>Restaurants </li><em> This dataset includes information collected about various restaurants. Each of these datasets can be associated with a unique placeID.</em><br><br>
+  <li>**Restaurants </li><em> This dataset includes information collected about various restaurants. Each of these datasets can be associated with a unique placeID.</em><br><br>
 
   <ol> 
   <li>chefmozaccepts.csv – Payment method (Card, Cash)</li>
@@ -30,7 +30,6 @@ The data for this project is sourced from the UC Irvine Machine Learning Reposit
   <ol> 
   <li>rating_final.csv - Rating details</li></ol>
 </ol>
-<br> 
 
 # Future Enhancements: <br>
 There are additional enhancements we can make to the existing dataset. By incorporating work hours data, which has already been cleaned as part of the code, we can introduce new features to facilitate a more detailed exploration of the restaurant list. This includes criteria such as the day of operation (workdays or weekends), operating hours (opening and closing times), and accepted methods of payment. Furthermore, we have the opportunity to expand the geographical coverage of the app by adding data for other states in Mexico, providing a broader and more comprehensive dining experience for users
