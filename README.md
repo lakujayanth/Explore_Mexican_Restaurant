@@ -19,17 +19,18 @@ The data for this project is sourced from the UC Irvine Machine Learning Reposit
   <li> chefmozhours4.csv - Work hours</li>
   <li> chefmozparking.csv - Parking type availability</li>	
   <li> geoplaces2.csv - Geographical presence </ol>
-<br><br>
+<br>
   <li>Consumers </li><em>This dataset encompasses information gathered about consumers. Each of these datasets can be linked to a unique userID.</em> <br><br>
   <ol> 
   <li>usercuisine.csv - Cuisine type</li>
   <li>userpayment.csv – payment method</li>
   <li>userprofile.csv – Consumers data </li></ol>	
-  <br><br>
+  <br>
   <li>Restaurants - Consumers Rating</li><em>The Rating dataset includes the food, service, and overall ratings given by consumers to a restaurant. Each rating is uniquely identified by the combination of placeID and userID</em><br><br>
   <ol> 
   <li>rating_final.csv - Rating details</li></ol>
 </ol>
-<br><br>
-# Future Enhancements: 
+<br> 
+
+# Future Enhancements: <br>
 There are additional enhancements we can make to the existing dataset. By incorporating work hours data, which has already been cleaned as part of the code, we can introduce new features to facilitate a more detailed exploration of the restaurant list. This includes criteria such as the day of operation (workdays or weekends), operating hours (opening and closing times), and accepted methods of payment. Furthermore, we have the opportunity to expand the geographical coverage of the app by adding data for other states in Mexico, providing a broader and more comprehensive dining experience for users
